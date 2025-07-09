@@ -1,7 +1,6 @@
 package br.com.ronaldo.model;
 
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.io.Serializable;
 import java.util.Objects;

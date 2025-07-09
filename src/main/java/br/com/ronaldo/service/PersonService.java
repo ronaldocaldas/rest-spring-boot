@@ -3,12 +3,14 @@ package br.com.ronaldo.service;
 import br.com.ronaldo.exception.ResourceNotFoundException;
 import br.com.ronaldo.model.Person;
 import br.com.ronaldo.repository.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.logging.Logger;
+
 
 @Service
 public class PersonService {
@@ -18,11 +20,11 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    private Logger logger = Logger.getLogger(PersonService.class.getName());
+    private Logger logger = LoggerFactory.getLogger(PersonService.class.getName());
 
     public Person findById(Long id) {
         logger.info("Finding one Person");
-        return personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No record found for this  ID"));
+        return personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No record found for this  ID= " + id));
     }
 
     public List<Person> findAll() {
