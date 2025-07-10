@@ -11,7 +11,7 @@ public class TestLogController {
 
     private Logger logger = LoggerFactory.getLogger(TestLogController.class.getName());
 
-    @GetMapping("/test")
+    @GetMapping("/test/v1")
     public String testLog() {
 
         logger.debug("Thist is a DEBUG log");
