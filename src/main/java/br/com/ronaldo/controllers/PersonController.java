@@ -20,7 +20,11 @@ public class PersonController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonDTO findById(@PathVariable("id") Long id) {
         var person =  personService.findById(id);
-        person.setBirthDate(new Date());
+        person.setBirthDay(new Date());
+//        person.setPhoneNumber("+55 12 9989-8923");
+        person.setPhoneNumber("");
+        person.setLastName(null);
+        person.setSensitiveData("SECRET");
         return person;
     }
 
