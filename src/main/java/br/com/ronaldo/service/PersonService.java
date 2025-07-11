@@ -2,6 +2,7 @@ package br.com.ronaldo.service;
 
 import br.com.ronaldo.controllers.PersonController;
 import br.com.ronaldo.data.dto.PersonDTO;
+import br.com.ronaldo.exception.RequiredObjectIsNullException;
 import br.com.ronaldo.exception.ResourceNotFoundException;
 import br.com.ronaldo.model.Person;
 import br.com.ronaldo.repository.PersonRepository;
@@ -45,6 +46,9 @@ public class PersonService {
 
     public PersonDTO create(PersonDTO person) {
         logger.info("Creating one Person");
+
+        if(person == null) throw new RequiredObjectIsNullException();
+
         var entity = parseObject(person, Person.class);
         var dto =  parseObject(personRepository.save(entity), PersonDTO.class);
         addHateoasLinks(dto);
@@ -54,6 +58,9 @@ public class PersonService {
 
     public PersonDTO update(PersonDTO person) {
         logger.info("Updating one Person");
+
+        if(person == null) throw new RequiredObjectIsNullException();
+
         Person entity = personRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No record found for this  ID= " + person.getId()));
         entity.setFirstName(person.getFirstName());
         entity.setLastName(person.getLastName());
@@ -66,7 +73,9 @@ public class PersonService {
 
     public void delete(Long id) {
         logger.info("Deleting one Person");
-        personRepository.deleteById(id);
+        Person entity = personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No record found for this  ID= " + id));
+        personRepository.delete(entity);
     }
 
     private void addHateoasLinks(PersonDTO dto) {
