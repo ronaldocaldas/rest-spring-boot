@@ -216,7 +216,7 @@ class PersonServiceTest {
         List<PersonDTO> people = service.findAll();
 
         assertNotNull(people);
-        assertEquals(14, people.size() );
+        assertEquals(14, people.size());
 
         var personOne = people.get(1);
 

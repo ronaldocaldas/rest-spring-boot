@@ -6,7 +6,7 @@ import br.com.ronaldo.model.Person;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MockPerson {
+public class  MockPerson {
 
 
     public Person mockEntity() {
