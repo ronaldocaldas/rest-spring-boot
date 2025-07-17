@@ -1,4 +1,4 @@
-package br.com.ronaldo.unittestes;
+package br.com.ronaldo.unittests;
 import static br.com.ronaldo.mapper.ObjectMapper.parseListObjects;
 import static br.com.ronaldo.mapper.ObjectMapper.parseObject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
 import br.com.ronaldo.data.dto.PersonDTO;
-import br.com.ronaldo.unittestes.mapper.MockPerson;
+import br.com.ronaldo.unittests.mapper.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,10 +1,10 @@
-package br.com.ronaldo.service;
+package br.com.ronaldo.unittests.service;
 
 import br.com.ronaldo.data.dto.PersonDTO;
 import br.com.ronaldo.exception.RequiredObjectIsNullException;
 import br.com.ronaldo.model.Person;
 import br.com.ronaldo.repository.PersonRepository;
-import br.com.ronaldo.unittestes.mapper.MockPerson;
+import br.com.ronaldo.unittests.mapper.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

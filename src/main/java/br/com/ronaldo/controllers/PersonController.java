@@ -2,7 +2,7 @@ package br.com.ronaldo.controllers;
 
 import br.com.ronaldo.controllers.docs.PersonControllerDocs;
 import br.com.ronaldo.data.dto.PersonDTO;
-import br.com.ronaldo.service.PersonService;
+import br.com.ronaldo.unittests.service.PersonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

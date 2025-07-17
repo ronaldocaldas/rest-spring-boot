@@ -1,4 +1,4 @@
-package br.com.ronaldo.unittestes.mapper;
+package br.com.ronaldo.unittests.mapper;
 
 import br.com.ronaldo.data.dto.PersonDTO;
 import br.com.ronaldo.model.Person;
