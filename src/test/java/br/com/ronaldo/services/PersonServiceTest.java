@@ -1,4 +1,4 @@
-package br.com.ronaldo.unittests.service;
+package br.com.ronaldo.services;
 
 import br.com.ronaldo.data.dto.PersonDTO;
 import br.com.ronaldo.exception.RequiredObjectIsNullException;

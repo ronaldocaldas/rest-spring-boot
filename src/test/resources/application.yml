@@ -1,7 +1,7 @@
 server:
   port: 8888
 cors:
-  originPatterns: http://localhost:8080, http://localhost:3000, https://www.ronaldo.com.br:8080"
+  originPatterns: "http://localhost:8080,http://localhost:3000,https://www.ronaldo.com.br"
 spring:
   application:
     name: rest-with-spring-boot-and-java
@@ -17,6 +17,7 @@ spring:
 logging:
   level:
     root: INFO
+    org.springframework.web.cors: DEBUG
     # root: WARN
     # br.com.erudio: DEBUG
 spring-doc:

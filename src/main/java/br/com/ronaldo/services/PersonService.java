@@ -1,4 +1,4 @@
-package br.com.ronaldo.unittests.service;
+package br.com.ronaldo.services;
 
 import br.com.ronaldo.controllers.PersonController;
 import br.com.ronaldo.data.dto.PersonDTO;

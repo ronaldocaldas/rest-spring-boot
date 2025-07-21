@@ -7,6 +7,8 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -16,8 +18,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         var allowOrigins = corsOriginPatterns.split(",");
+
+        System.out.println("===> CORS Allowing Origins: " + Arrays.toString(allowOrigins)); // Debug
         registry.addMapping("/**")
-                .allowedOrigins(allowOrigins)
+                .allowedOriginPatterns(allowOrigins)
 //                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedMethods("*")
                 .allowCredentials(true);

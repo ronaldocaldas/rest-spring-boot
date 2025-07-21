@@ -2,7 +2,7 @@ package br.com.ronaldo.controllers;
 
 import br.com.ronaldo.controllers.docs.BookControllerDocs;
 import br.com.ronaldo.data.dto.BookDTO;
-import br.com.ronaldo.unittests.service.BookService;
+import br.com.ronaldo.services.BookService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
