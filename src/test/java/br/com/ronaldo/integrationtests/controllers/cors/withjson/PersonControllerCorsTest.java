@@ -1,4 +1,4 @@
-package br.com.ronaldo.integrationtests.controllers.withjson;
+package br.com.ronaldo.integrationtests.controllers.cors.withjson;
 
 import br.com.ronaldo.config.TestConfigs;
 import br.com.ronaldo.integrationtests.dto.PersonDTO;
@@ -14,8 +14,6 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
 import static io.restassured.RestAssured.given;
 import static junit.framework.TestCase.assertTrue;
@@ -23,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PersonControllerTest extends AbstractIntegrationTest {
+class PersonControllerCorsTest extends AbstractIntegrationTest {
 
     private static RequestSpecification specification;
     private static ObjectMapper objectMapper;
@@ -40,7 +38,7 @@ class PersonControllerTest extends AbstractIntegrationTest {
 
     @Test
     @Order(1)
-    void create() throws JsonProcessingException {
+    void createTest() throws JsonProcessingException {
         mockPerson();
 
         specification = new RequestSpecBuilder()
@@ -77,12 +75,14 @@ class PersonControllerTest extends AbstractIntegrationTest {
         assertEquals("Stallman", createdPerson.getLastName());
         assertEquals("New York City - New York - USA", createdPerson.getAddress());
         assertEquals("Male", createdPerson.getGender());
+        assertTrue(createdPerson.getEnabled());
+
 
     }
 
     @Test
     @Order(2)
-    void createWithWrongOrigin() throws JsonProcessingException {
+    void createWithWrongOriginTest() throws JsonProcessingException {
 
         specification = new RequestSpecBuilder()
             .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_SEMERU)
@@ -109,7 +109,7 @@ class PersonControllerTest extends AbstractIntegrationTest {
 
     @Test
     @Order(3)
-    void findById() throws JsonProcessingException {
+    void findByIdTest() throws JsonProcessingException {
         specification = new RequestSpecBuilder()
                 .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_LOCAL)
                 .setBasePath("/api/person/v1")
@@ -144,10 +144,11 @@ class PersonControllerTest extends AbstractIntegrationTest {
         assertEquals("Stallman", createdPerson.getLastName());
         assertEquals("New York City - New York - USA", createdPerson.getAddress());
         assertEquals("Male", createdPerson.getGender());
+        assertTrue(createdPerson.getEnabled());
     }
     @Test
     @Order(4)
-    void findByIdWithWrongOrigin() throws JsonProcessingException {
+    void findByIdWithWrongOriginTest() throws JsonProcessingException {
         specification = new RequestSpecBuilder()
                 .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_SEMERU)
                 .setBasePath("/api/person/v1")
@@ -175,5 +176,6 @@ class PersonControllerTest extends AbstractIntegrationTest {
         person.setLastName("Stallman");
         person.setAddress("New York City - New York - USA");
         person.setGender("Male");
+        person.setEnabled(true);
     }
 }

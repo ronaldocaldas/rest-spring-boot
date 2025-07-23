@@ -6,6 +6,7 @@ import br.com.ronaldo.exception.RequiredObjectIsNullException;
 import br.com.ronaldo.exception.ResourceNotFoundException;
 import br.com.ronaldo.model.Person;
 import br.com.ronaldo.repository.PersonRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Service
 public class PersonService {
 
+    public static final String NO_RECORD_FOUND_FOR_THIS_ID = "No record found for this  ID= ";
     @Autowired
     PersonRepository personRepository;
 
@@ -29,7 +31,7 @@ public class PersonService {
 
     public PersonDTO findById(Long id) {
         logger.info("Finding one Person");
-        var entity = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No record found for this  ID= " + id));
+        var entity = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(NO_RECORD_FOUND_FOR_THIS_ID + id));
         var dto = parseObject(entity, PersonDTO.class);
         addHateoasLinks(dto);
         return dto;
@@ -61,7 +63,7 @@ public class PersonService {
 
         if(person == null) throw new RequiredObjectIsNullException();
 
-        Person entity = personRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No record found for this  ID= " + person.getId()));
+        Person entity = personRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException(NO_RECORD_FOUND_FOR_THIS_ID + person.getId()));
         entity.setFirstName(person.getFirstName());
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());
@@ -74,9 +76,24 @@ public class PersonService {
     public void delete(Long id) {
         logger.info("Deleting one Person");
         Person entity = personRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No record found for this  ID= " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(NO_RECORD_FOUND_FOR_THIS_ID + id));
         personRepository.delete(entity);
     }
+
+    @Transactional
+    public PersonDTO disablePerson(Long id) {
+        logger.info("Deleting one Person");
+        personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(NO_RECORD_FOUND_FOR_THIS_ID + id));
+
+        personRepository.disablePerson(id);
+        var entity = personRepository.findById(id).get();
+        var dto =  parseObject(entity, PersonDTO.class);
+        addHateoasLinks(dto);
+
+      return dto;
+    }
+
 
     private void addHateoasLinks(PersonDTO dto) {
         dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId())).withSelfRel().withType("GET"));
@@ -84,5 +101,7 @@ public class PersonService {
         dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(PersonController.class).update(dto)).withRel("update").withType("PUT"));
+        dto.add(linkTo(methodOn(PersonController.class).disablePerson(dto.getId())).withRel("disable").withType("PATH"));
+
     }
 }
