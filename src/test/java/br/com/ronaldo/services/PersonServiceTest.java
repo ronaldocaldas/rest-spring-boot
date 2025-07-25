@@ -209,7 +209,7 @@ class PersonServiceTest {
         verifyNoMoreInteractions(repository);
     }
 
-    @Disabled("RESON: Still under development")
+    @Disabled("REASON: Still under development")
     @Test
     void findAll() {
 
