@@ -1,10 +1,12 @@
 package br.com.ronaldo.services;
 
 import br.com.ronaldo.config.FileStorageConfig;
-import br.com.ronaldo.controllers.FileController;
+import br.com.ronaldo.exception.FileNotFoundException;
 import br.com.ronaldo.exception.FileStorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,6 +58,23 @@ public class FileStorageService {
             String messageNotStorageError = "Could not store file " + fileName + ". Please try again!";
             logger.error(messageNotStorageError);
             throw new FileStorageException(messageNotStorageError);
+        }
+    }
+
+    public Resource loadFileAsResource(String fileName) {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                return resource;
+            } else {
+                logger.error("File not found " + fileName);
+                throw new FileNotFoundException("File not found" + fileName);
+            }
+
+        } catch (Exception e) {
+            logger.error("File not found " + fileName);
+            throw new FileNotFoundException("File not found" + fileName, e);
         }
     }
 }
